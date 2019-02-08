@@ -1,37 +1,15 @@
-## Welcome to GitHub Pages
+## Présentation du projet
+Il s'agit d'un projet de visualisation sur un jeu de données constitué personnellement.
+Dans notre cas nous avons choisi de travailler sur extraire des cercles sociaux via nos amis Facebook et leurs goûts et les données renseignées.
 
-You can use the [editor on GitHub](https://github.com/clevecque/SocialCircle/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+L'image suivante est une première ébauche rapide de notre projet. La donnée utilisée ici sont toutes les pages Facebook aimées par mes amis et les catégories qui leur sont associées. Autrement dit, parmi toutes les pages likées de tous mes amis, on retrouve en majorité de la musique et des pages communautaire.
 
-### Markdown
+Pistes d'amélioration : 
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+1. il faut nuancer l'interprétation de cette visualisation et donc l'améliorer : pour chaque bulle lui est associée une quantité (représentée par sa taille). Cependant cette quantité est incrémentée à chaque fois qu'un ami like une page associée à cette catégorie. Il n'y a pas de différence faite si jamais tous les amis ont liké la même page ou s'ils aiment des pages toutes différentes dans une catégorie.
+2. il faut réajuster la taille des bulles qui n'est pas toujours représentative.
 
-```markdown
-Syntax highlighted code block
+![Image](likes_pages.png)
 
-# Header 1
-## Header 2
-### Header 3
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/clevecque/SocialCircle/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
