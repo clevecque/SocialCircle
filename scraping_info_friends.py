@@ -149,12 +149,12 @@ def get_user_info(url):
   # Friends in common
   for link in soup.find_all('a'):
     if 'en commun' in link.text:
-      common_friends = link.text.split('(')[1].split(')')[0]
+      nb_common_friends = link.text.split('(')[1].split(')')[0]
 
   try:
-    info['common friends'] = common_friends
+    info['nb common friends'] = nb_common_friends
   except NameError:
-    info['common friends'] =''
+    info['nb common friends'] = ''
 
   return info
 
@@ -219,6 +219,40 @@ def get_all_likes_categories(url):
   return all_likes
 
 
+
+def get_common_friends(soup, common_friends):
+  for link in soup.find_all('a'):
+    try:
+      adr = link.get('href')
+      if 'fref=fr_tab' in adr :
+        common_friends.append(adr)
+    except TypeError:
+      continue
+
+  for element in soup.find_all('div',{'id':'m_more_mutual_friends'}):
+    for link in element.find_all('a'):
+
+      data = requests.get('https://m.facebook.com'+link.get('href'), cookies=cj)
+      soup = bs4.BeautifulSoup(data.text, 'html.parser')
+
+      get_common_friends(soup, common_friends)
+
+def get_all_common_friends(url):
+  new_url = 'https://m.facebook.com' + url[:-12] +'/friends?mutual=1'
+
+  data = requests.get(new_url, cookies=cj)
+  soup = bs4.BeautifulSoup(data.text, 'html.parser')
+
+  common_friends = []
+  try:
+    get_common_friends(soup, common_friends)
+  except :
+    print("Error with", url)
+  return common_friends
+
+
+
+
 with open(args.friends, 'r') as fr:
 
   data = json.load(fr)
@@ -227,10 +261,27 @@ with open(args.friends, 'r') as fr:
     user_url = data[user]
     user_info = get_user_info(user_url)
     user_likes = get_all_likes_categories(user_url)
+    user_common_friends = get_all_common_friends(user_url)
     print(user, data[user], len(user_likes))
     user_info['likes'] = user_likes
     user_info['url'] = user_url
+    user_info['common friends'] = user_common_friends
     new_data[user] = user_info
-    with open('friend_list_info_full.json', 'w') as fw:
+    with open('friend_list_more.json', 'w') as fw:
       json.dump(new_data, fw, sort_keys=True, indent=4, ensure_ascii=False)
 
+
+
+
+
+  # # Detail of friends in common
+  # url_friends = 'https://m.facebook.com' + url[:-12] + '/friends?mutual=1'
+  # data_friends = requests.get(url_friends, cookies=cj)
+  # soup_friends = bs4.BeautifulSoup(data_friends.text, 'html.parser')
+  # common_friends = []
+  # get_common_friends(soup_friends)
+
+  # try:
+  #   info['common friends'] = common_friends
+  # except NameError:
+  #   info['common friends'] = ''
