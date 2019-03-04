@@ -9,7 +9,7 @@ The goal is to visualize some affinities that could exist between some of our fr
 
 Go to Settings > Your Facebook information > Access your information. Here choose Download Your Information and select only friends in JSON format. You will receive a notification when your file is ready. You will only need the file called `friends.json` in it.
 
-2. Crawl your data. You will need to download at least the /data folder from this repository. Put it somewhere in your computer and place the `friends.json` in it. There are three Python files in the folder. Execute them in order.
+2. Crawl your data. You will need to download at least the /data folder from this repository. Put it somewhere in your computer and place the `friends.json` in it. There are three Python files in the folder and one JSON. Execute the Python's ones in order.
 
 You will need the **libray bs4 (Beautiful Soup)** to execute it.
 
@@ -30,7 +30,7 @@ python page_category.py
 ```
 This code update the `friends_data.json` file. If you don't want to wait that long you can stop it before and just take the part from the file that has been treated. I might add a code to do that easily.
 
-The last one only put all the data in the right format for the visualisation.
+The last one only put all the data in the right format for the visualisation. You just need the `likes_categories.json` to be in the same folder.
 ```
 python to_final_format.py
 ```
