@@ -7,9 +7,9 @@ The goal is to visualize some affinities that could exist between some of our fr
 ## Create your dataset
 1. You will need to download your data about your friends from Facebook. 
 
-Go to Settings > Your Facebook information > Access your information. Here choose Download Your Information and select only friends in JSON format. You will receive a notification when your file is ready. You will only need the file called "friends.json" in it.
+Go to Settings > Your Facebook information > Access your information. Here choose Download Your Information and select only friends in JSON format. You will receive a notification when your file is ready. You will only need the file called `friends.json` in it.
 
-2. Crawl your data. You will need to download at least the /data folder from this repository. There are three Python files in it. Execute them in order.
+2. Crawl your data. You will need to download at least the /data folder from this repository. Put it somewhere in your computer and place the `friends.json` in it. There are three Python files in the folder. Execute them in order.
 
 The first one will give you a list of all your friends and for each one, some information about common friends and the pages they liked. 
 
@@ -17,7 +17,7 @@ Warnings:
 * the code has been written for a French Facebook for now...
 * with a good connexion it takes ~10s by friend, so if you have around 700 friends like me it turns around 4/5hrs and the code should not be stopped or you'll have to restart it.
 ```
-python get_data.py your_email your_passwd your_id
+python get_data.py your_email your_passwd your_id location_of_friends.json
 ```
 It will create a file called `friends_data.json` in your folder, don't move it.
 
@@ -40,3 +40,7 @@ For now there is no button "Load data" but it should come. In between you can ju
 * It counts for some pre-made categories the number of common pages between all your friends. Then we compute an affinity that looks like 
 ![equation](http://www.sciweavers.org/tex2img.php?eq=%20%5Cfrac%7B1%7D%7B2%7D%20%28%5Cfrac%7BA%20%20%5Ccap%20B%7D%7BA%7D%20%2B%20%5Cfrac%7BA%20%20%5Ccap%20%20B%7D%7BB%7D%29&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
 where A is the number of pages of user A, B is the number of pages of user B and A ∩ B is the number of common pages.
+* This affinity will map the nodes: the closer they are the higher number of common pages they have. This affinity is also supposed to take into account the fact that some people like a lot more pages than another and it could skew the affinity.
+* The links between the nodes are drawn between some of your friends that are themselves friends.
+* The color matches the year you added them
+* The size matches the number of pages the liked
