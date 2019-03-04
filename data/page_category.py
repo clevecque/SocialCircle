@@ -42,7 +42,7 @@ def get_page_category(url):
 # There is surely a way to improve it like storing the values in a parallel list
 # and not reopening the page if it has already been met but I don't have time rn.
 
-with open('friends_data_test.json', 'r+') as fp:
+with open('friends_data.json', 'r+') as fp:
   friends_data = json.load(fp)
   i = 0
 

@@ -156,7 +156,7 @@ def make_categorical_dic(dic_categories):
 
 
 
-data_categories = get_data_w_categories('friends_data_test.json')
+data_categories = get_data_w_categories('friends_data.json')
 graph_data = make_categorical_dic(data_categories)
 
 with open('graph.json', 'w') as fw:
