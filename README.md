@@ -2,6 +2,7 @@
 
 This is a final year project realized by Thomas Kuoch, Aliénor Dartiguenave and Clémence Lévecque.
 The goal is to visualize some affinities that could exist between some of our friends on Facebook.
+You can visualize the work here : https://clevecque.github.io/SocialCircle/
 
 
 ## Create your dataset
