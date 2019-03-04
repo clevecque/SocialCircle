@@ -1,59 +1,125 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<style>
 
-  .links line {
-    stroke: #999;
-    stroke-opacity: 0.6;
-  }
+<head>
+  <title>SocialCircles</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="shortcut icon" href="img/network.ico" type="image/x-icon" />
+  <meta charset="UTF-8">
 
-  .nodes circle {
-    stroke: #fff;
-    stroke-width: 0.5px;
-  }
+   <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
 
-  text {
-    font-family: sans-serif;
-    font-size: 6px;
-  }
-
-  div.tooltip {
-    position: absolute;
-    text-align: center;
-    padding: 2px;
-    font: 12px sans-serif;
-    background: lightsteelblue;
-    border: 0px;
-    border-radius: 8px;
-    pointer-events: none;
-  }
-
-</style>
 <body>
-<script src="https://d3js.org/d3.v4.min.js"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+
+  <div class="header">
+    <ul>
+      <li><a href="index.html"> <img src="img/network_white.png" /> SocialCircles</a></li>
+      <li><a href="https://github.com/clevecque/SocialCircle">About</a></li>
+      <li><a href="loaddata.html">Load Data</a></li>
+      <li style="float:right"><a class="active" href="mailto:thomas.kuoch@ecl15.ec-lyon.fr">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- <div class="description">
+    Cette visualisation permet de voir la proximité des personnes selon les pages qu'ils aiment sur Facebook.<br />
+    Chaque noeud représente une personne, chaque lien entre deux noeuds illustre un lien d'amitié.<br />
+    Deux personnes qui sont proches sur le graphe ont un score d'affinité proche.<br />
+  </div> -->
+
+    <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+  <script async src="./javascript/visu.js"></script>
+
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-10">
+      <form>
+        <br />
+        <b>Sélectionnez une catégorie</b>
+        <br />
+        <br />
+        <label><input type="radio" name="category" value="music" checked> Musique </label>
+        <label><input type="radio" name="category" value="sport"> Sport</label>
+        <label><input type="radio" name="category" value="travel"> Voyage </label>
+        <label><input type="radio" name="category" value="shopping"> Shopping </label>
+        <label><input type="radio" name="category" value="litterature"> Litterature </label>
+        <label><input type="radio" name="category" value="arts"> Arts </label>
+        <label><input type="radio" name="category" value="journalism_medias"> Medias </label>
+        <label><input type="radio" name="category" value="cinema"> Cinéma </label>
+        <label><input type="radio" name="category" value="politics"> Politique </label>
+        <label><input type="radio" name="category" value="charity"> Solidaire </label>
+        <label><input type="radio" name="category" value="communities"> Communautés </label>
+        <label><input type="radio" name="category" value="gaming"> Jeux vidéos </label>
+      </form>
+    </div>
+    <div class="col"></div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-10">
+      <svg width="1600" height="700"></svg>
+    </div>
+    <div class="col-2"><div id="divLegendDates"></div></div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+
+           <a href= "https://www.linkedin.com/in/ali%C3%A9nor-dartiguenave-4969a98b/">
+            <img src="img/linkedin.png">
+           </a>
+           <img src= "img/github.png" />  Aliénor Dartiguenave
+        </div>
+
+        <div class="col-md-3">
+
+           <a href= "https://www.linkedin.com/in/clemencelvcq/">
+            <img src="img/linkedin.png">
+           </a>
+           <a href= "https://github.com/clevecque">
+            <img src= "img/github.png" />
+           </a>  Clémence Lévecque
+        </div>
+
+        <div class="col-md-3">
+           <a href= "https://www.linkedin.com/in/thomas-kuoch/">
+            <img src="img/linkedin.png">
+           </a>
+           <a href="https://github.com/thomaskuoch">
+            <img src= "img/github.png" />
+           </a>  Thomas Kuoch
+
+        </div>
+
+        <div class="col-md-2">Mars 2019</div>
+
+
+    </div>
+<!--     <table>
+      <tr>
+        <td><img src="img/alienor.png" /></td>
+        <td><img src="img/clemence.png" /></td>
+        <td><img src="img/thomas.png" /></td>
+      </tr>
+      <tr>
+        <td>Aliénor Dartiguenave</td>
+        <td>Clémence Lévecque</td>
+        <td>Thomas Kuoch</td>
+      </tr>
+    </table> -->
+
+<!--   <p>Mars 2019</p>
  -->
- <script async src="./javascript/visu.js"></script>
-
-  <form>
-  Catégorie:
-    <label><input type="radio" name="category" value="music" checked> Musique </label>
-    <label><input type="radio" name="category" value="sport" > Sport</label>
-    <label><input type="radio" name="category" value="travel"> Voyage </label>
-    <label><input type="radio" name="category" value="shopping"> Shopping </label>
-    <label><input type="radio" name="category" value="litterature"> Litterature </label>
-    <label><input type="radio" name="category" value="arts"> Arts </label>
-    <label><input type="radio" name="category" value="journalism_medias"> Medias </label>
-    <label><input type="radio" name="category" value="cinema"> Cinéma </label>
-    <label><input type="radio" name="category" value="politics"> Politique </label>
-    <label><input type="radio" name="category" value="charity"> Solidaire </label>
-    <label><input type="radio" name="category" value="communities"> Communautés </label>
-    <label><input type="radio" name="category" value="gaming"> Jeux vidéos </label>
-
-  </form>
-
-<svg width="960" height="600"></svg>
-
 </body>
 
 

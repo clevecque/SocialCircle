@@ -30,14 +30,24 @@ var simulation = d3.forceSimulation()
 var g = svg.append("g")
     .attr("class", "everything");
 
+
+// Add legend
+var divLegendDates = d3.select("#divLegendDates");
+
+divLegendDates.append("p")
+    .html("Date d'ajout")
+    .style("text-align","center")
+    .style("font-size","20px")
+
+var list = divLegendDates.append("ul");
+
+
 // -----------------------------------------------------------------------------
 
 function drawGraph(nodes, links) {
 
   d3.selectAll("line").remove()
   d3.selectAll("circle").remove()
-
-
 
   var link = g.append("g")
     .attr("class", "links")
@@ -185,6 +195,63 @@ function drawGraph(nodes, links) {
   }
 }
 
+function addLegendDates(nodes){
+
+  var datesCount = d3.nest()
+    .key(function(d) { return d.timestamp; })
+    .rollup(function(v) { return v.length; })
+    .entries(nodes);
+
+  var sizeCount = d3.nest()
+    .key(function(d) { return d.size})
+    .entries(nodes);
+
+  // sizeCount.sort(function(a,b) { return +a.key - +b.key })
+
+  max_size = d3.max(sizeCount, function(d) { return +d.key; })
+
+  min_size = d3.min(sizeCount, function(d) { return +d.key; })
+
+  // var sizeScale = d3.scale.linear()
+  //   .domain([0, 10])
+  //   .range([2, 30]);
+
+  // console.log(sizeScale)
+
+  // var newData = sizeCount.map(function(v) {
+  //   return +v.key;
+  // });
+
+  console.log(min_size)
+
+
+  console.log(max_size);
+
+  // sizeCount.forEach(function(d) {console.log(d.key); })
+
+  // console.log(sizeCount);
+
+  datesCount.sort(function(a,b){
+    return a.key.localeCompare(b.key);
+  });
+
+  var entries = list.selectAll("li")
+    .data(datesCount)
+    .enter()
+    .append("li");
+
+
+  // append rectangle and text:
+  entries.append("span")
+    .attr("class","rect")
+    .style("background-color", function(d) { return color(+d.key); })
+
+  entries.append("span")
+    .attr("class","label")
+    .html(function(d) { return d.key; })
+
+}
+
 
 // -----------------------------------------------------------------------------
 
@@ -199,6 +266,7 @@ d3.json("graph.json", function(error, graph) {
   var nodes = graph['nodes_' + selectedCategory];
 
   drawGraph(nodes, links);
+  addLegendDates(nodes);
 
   //radio button
   d3.selectAll(("input[name='category']")).on("change", function() {
@@ -208,6 +276,7 @@ d3.json("graph.json", function(error, graph) {
       console.log(links_new)
 
       drawGraph(nodes_new, links_new);
+      addLegendDates(nodes);
   });
 
 
