@@ -40,7 +40,7 @@ For now there is no button "Load data" but it should come. In between you can ju
 
 ## How the visualisation works ?
 * It counts for some pre-made categories the number of common pages between all your friends. Then we compute an affinity that looks like 
-$affinity = \frac{1}{2}(\frac{A \cap B}{A} + \frac{A \cap B}{B})$
+![equation](https://latex.codecogs.com/gif.latex?\frac{1}{2}(\frac{A&space;\cap&space;B}{A}&space;&plus;&space;\frac{A&space;\cap&space;B}{B}))
 where A is the number of pages of user A, B is the number of pages of user B and A ∩ B is the number of common pages.
 * This affinity will map the nodes: the closer they are the higher number of common pages they have. This affinity is also supposed to take into account the fact that some people like a lot more pages than another and it could skew the affinity.
 * The links between the nodes are drawn between some of your friends that are themselves friends.
