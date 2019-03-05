@@ -117,3 +117,16 @@ ul {
 #divLegendDates {
   width: 150px;
 }
+
+
+.legend .tick text {
+  font-size: 30px;
+  fill: #8E8883;
+  font-family: sans-serif;
+  alignment-baseline: middle;
+}
+.legend__label {
+  font-size: 45px;
+  fill: #635F5D;
+  font-family: sans-serif;
+}

@@ -26,9 +26,6 @@ var simulation = d3.forceSimulation()
   .force("center", d3.forceCenter(width / 2, height / 2))
   .force("collide", d3.forceCollide().radius(function(d) { return Math.sqrt(d.size) + 0.5; }));
 
-//add encompassing group for the zoom
-var g = svg.append("g")
-    .attr("class", "everything");
 
 
 // Add legend
@@ -37,17 +34,29 @@ var divLegendDates = d3.select("#divLegendDates");
 divLegendDates.append("p")
     .html("Date d'ajout")
     .style("text-align","center")
-    .style("font-size","20px")
+    .style("font-size","20px");
 
-var list = divLegendDates.append("ul");
+var listDates = divLegendDates.append("ul");
+
+var divLegendSizes = d3.select('#divLegendSizes');
+
+divLegendSizes.append("p")
+    .html("Nombre de pages suivies")
+    .style("text-align","center")
+    .style("font-size","20px");
 
 
 // -----------------------------------------------------------------------------
 
 function drawGraph(nodes, links) {
 
-  d3.selectAll("line").remove()
-  d3.selectAll("circle").remove()
+  d3.selectAll("g").remove()
+  // d3.selectAll("circle").remove()
+
+  //add encompassing group for the zoom
+  var g = svg.append("g")
+      .attr("class", "everything");
+
 
   var link = g.append("g")
     .attr("class", "links")
@@ -74,7 +83,7 @@ function drawGraph(nodes, links) {
         tooltip.transition()
             .duration(200)
             .style("opacity", .9);
-        tooltip .html(d.name)
+        tooltip.html(d.name + "<br/>" + d.size)
             .style("left", (d3.event.pageX) + "px")
             .style("top", (d3.event.pageY - 28) + "px");
         })
@@ -195,6 +204,31 @@ function drawGraph(nodes, links) {
   }
 }
 
+function selectElements(nodes, nbElements){
+
+  var sizeCount = d3.nest()
+    .key(function(d) { return d.size})
+    .entries(nodes);
+
+  sizeCount.sort(function(a,b) { return +a.key - +b.key })
+
+  var len = sizeCount.length/nbElements
+
+  var newData = sizeCount.map(function(v) {return +v.key;});
+
+  var sizes = [];
+
+  for   (i=0; i < nbElements; i++) {
+    var index = Math.round(i*len);
+    var key = newData[index];
+    sizes.push(key)
+  }
+  var last_key = newData[len*nbElements - 1];
+  sizes.push(last_key)
+
+  return sizes;
+}
+
 function addLegendDates(nodes){
 
   var datesCount = d3.nest()
@@ -202,40 +236,11 @@ function addLegendDates(nodes){
     .rollup(function(v) { return v.length; })
     .entries(nodes);
 
-  var sizeCount = d3.nest()
-    .key(function(d) { return d.size})
-    .entries(nodes);
-
-  // sizeCount.sort(function(a,b) { return +a.key - +b.key })
-
-  max_size = d3.max(sizeCount, function(d) { return +d.key; })
-
-  min_size = d3.min(sizeCount, function(d) { return +d.key; })
-
-  // var sizeScale = d3.scale.linear()
-  //   .domain([0, 10])
-  //   .range([2, 30]);
-
-  // console.log(sizeScale)
-
-  // var newData = sizeCount.map(function(v) {
-  //   return +v.key;
-  // });
-
-  console.log(min_size)
-
-
-  console.log(max_size);
-
-  // sizeCount.forEach(function(d) {console.log(d.key); })
-
-  // console.log(sizeCount);
-
   datesCount.sort(function(a,b){
     return a.key.localeCompare(b.key);
   });
 
-  var entries = list.selectAll("li")
+  var entries = listDates.selectAll("li")
     .data(datesCount)
     .enter()
     .append("li");
@@ -252,33 +257,95 @@ function addLegendDates(nodes){
 
 }
 
+function addLegendSizes(){
+
+
+  var height = 460
+  var width = 300
+  var svg = d3.select("#divLegendSizes")
+    .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+
+  // Add legend: circles
+  // var valuesToShow = selectElements(nodes, 5);
+  var valuesToShow = [5, 50, 100, 250, 1000]
+  var xCircle = 100
+  var xLabel = 200
+  var yCircle = 20
+  var lastyCircle = 0
+
+  valuesToShow.forEach(function(d, i){
+    svg
+      .append("circle")
+        .attr("class", "circlesLegend")
+        .attr("cx", xCircle)
+        .attr("cy", yCircle + Math.sqrt(d) + lastyCircle )
+        .attr("r", Math.sqrt(d))
+        .style("fill", "black")
+        .attr("stroke", "black")
+
+    svg
+      .append("line")
+        .attr("class", "linesLegend")
+        .attr('x1', xCircle + Math.sqrt(d) )
+        .attr('x2', xLabel)
+        .attr('y1', yCircle + Math.sqrt(d) + lastyCircle)
+        .attr('y2', yCircle + Math.sqrt(d) + lastyCircle)
+        .attr('stroke', 'black')
+        .style('stroke-dasharray', ('2,2'))
+
+  svg
+    .append("text")
+      .attr("class", "textLegend")
+      .attr('x', xLabel)
+      .attr('y', yCircle + Math.sqrt(d) + lastyCircle)
+      .text( d)
+      .style("font-size", 7)
+      .attr('alignment-baseline', 'middle')
+
+  lastyCircle += 2*Math.sqrt(d) + yCircle
+  console.log(lastyCircle)
+  })
+}
+
 
 // -----------------------------------------------------------------------------
 
+var fichierSelectionne = document.getElementById('real_file_button').files[0];
+console.log(fichierSelectionne);
 
-d3.json("graph.json", function(error, graph) {
-  if (error) throw error;
+function update(file){
+  d3.json(file, function(error, graph) {
+    if (error) throw error;
 
 
-  var selectedCategory = d3.select('input[name="category"]:checked').property("value");
+    var selectedCategory = d3.select('input[name="category"]:checked').property("value");
 
-  var links = graph['links_' + selectedCategory];
-  var nodes = graph['nodes_' + selectedCategory];
+    var links = graph['links_' + selectedCategory];
+    var nodes = graph['nodes_' + selectedCategory];
 
-  drawGraph(nodes, links);
-  addLegendDates(nodes);
+    drawGraph(nodes, links);
+    addLegendDates(nodes);
+    addLegendSizes();
 
-  //radio button
-  d3.selectAll(("input[name='category']")).on("change", function() {
-      var links_new = graph['links_' + this.value];
-      var nodes_new = graph['nodes_' + this.value];
+    //radio button
+    d3.selectAll(("input[name='category']")).on("change", function() {
+        var links_new = graph['links_' + this.value];
+        var nodes_new = graph['nodes_' + this.value];
 
-      console.log(links_new)
+        console.log(links_new)
 
-      drawGraph(nodes_new, links_new);
-      addLegendDates(nodes);
+        drawGraph(nodes_new, links_new);
+        addLegendDates(nodes);
+        // addLegendSizes();
+
+    });
+
+
+
   });
+};
 
+update("graph.json");
 
-
-});

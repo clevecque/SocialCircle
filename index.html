@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 
 <head>
+  <meta charset="UTF-8">
   <title>SocialCircles</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="shortcut icon" href="img/network.ico" type="image/x-icon" />
-  <meta charset="UTF-8">
+  <link rel="shortcut icon" href="img/network.ico" type="image/x-icon">
 
-   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+  <script async src="./javascript/visu.js"></script>
 </head>
 
 <body>
@@ -16,8 +19,17 @@
     <ul>
       <li><a href="index.html"> <img src="img/network_white.png" /> SocialCircles</a></li>
       <li><a href="https://github.com/clevecque/SocialCircle">About</a></li>
-      <li><a href="loaddata.html">Load Data</a></li>
-      <li style="float:right"><a class="active" href="mailto:thomas.kuoch@ecl15.ec-lyon.fr">Contact</a></li>
+
+      <li>
+        <input type="file" id="real_file_button" hidden="hidden" onchange="update(this.files)" webkitdirectory=true />
+        <button type="button" id="load_data_button" class="btn btn-warning navbar-btn">Load Data</button>
+      </li>
+      <!-- <li><input type="file" id="file_graph" name="file_graph" accept=".json" /></li> -->
+      <!-- <li><a href="loaddata.html">Load Data</a></li> -->
+
+
+      <li style="float:right"><a href="https://github.com/clevecque/SocialCircle/issues">Contact</a></li>
+      <!-- <li style="float:right"><a class="active" href="mailto:thomas.kuoch@ecl15.ec-lyon.fr">Contact</a></li> -->
     </ul>
   </div>
 
@@ -27,15 +39,7 @@
     Deux personnes qui sont proches sur le graphe ont un score d'affinité proche.<br />
   </div> -->
 
-    <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-  <script src="https://d3js.org/d3.v4.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
-  <script async src="./javascript/visu.js"></script>
 
   <div class="row">
     <div class="col"></div>
@@ -65,9 +69,19 @@
 
   <div class="row">
     <div class="col-10">
-      <svg width="1600" height="700"></svg>
+      <svg width="1600" height="640"></svg>
     </div>
-    <div class="col-2"><div id="divLegendDates"></div></div>
+    <div class="col-2">
+
+      <div class="row">
+        <div id="divLegendDates"></div>
+      </div>
+
+      <div class="row">
+        <div id="divLegendSizes"></div>
+      </div>
+
+    </div>
   </div>
 
   <footer class="footer">
@@ -105,21 +119,6 @@
 
 
     </div>
-<!--     <table>
-      <tr>
-        <td><img src="img/alienor.png" /></td>
-        <td><img src="img/clemence.png" /></td>
-        <td><img src="img/thomas.png" /></td>
-      </tr>
-      <tr>
-        <td>Aliénor Dartiguenave</td>
-        <td>Clémence Lévecque</td>
-        <td>Thomas Kuoch</td>
-      </tr>
-    </table> -->
-
-<!--   <p>Mars 2019</p>
- -->
 </body>
 
 
