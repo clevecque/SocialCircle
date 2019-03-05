@@ -32,7 +32,7 @@ var simulation = d3.forceSimulation()
 var divLegendDates = d3.select("#divLegendDates");
 
 divLegendDates.append("p")
-    .html("Date d'ajout")
+    .html("Friend added in")
     .style("text-align","center")
     .style("font-size","20px");
 
@@ -41,9 +41,17 @@ var listDates = divLegendDates.append("ul");
 var divLegendSizes = d3.select('#divLegendSizes');
 
 divLegendSizes.append("p")
-    .html("Nombre de pages suivies")
+    .html("Number of pages followed")
     .style("text-align","center")
     .style("font-size","20px");
+
+var divLegendConnection = d3.select('#divLegendConnection');
+
+divLegendConnection.append("p")
+    .html("— Are friends with each other")
+    .style("text-align","center")
+    .style("font-size","20px");
+
 
 
 // -----------------------------------------------------------------------------
@@ -260,8 +268,8 @@ function addLegendDates(nodes){
 function addLegendSizes(){
 
 
-  var height = 460
-  var width = 300
+  var height = 300
+  var width = 270
   var svg = d3.select("#divLegendSizes")
     .append("svg")
       .attr("width", width)
@@ -270,7 +278,7 @@ function addLegendSizes(){
   // Add legend: circles
   // var valuesToShow = selectElements(nodes, 5);
   var valuesToShow = [5, 50, 100, 250, 1000]
-  var xCircle = 100
+  var xCircle = 75
   var xLabel = 200
   var yCircle = 20
   var lastyCircle = 0
