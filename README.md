@@ -39,7 +39,7 @@ python to_final_format.py
 ```
 
 ## Make your own visualisation
-For now there is no button "Load data" but it should come. In between you can just download the github and replace the `graph.json` file (example file) by the one you created.
+For now the button "Load data" doesn't work but it should come. In between you can just download the github and replace the `graph.json` file (example file) by the one you created.
 
 ## How the visualisation works ?
 * It counts for some pre-made categories the number of common pages between all your friends. Then we compute an affinity that looks like 
@@ -49,3 +49,14 @@ where A is the number of pages of user A, B is the number of pages of user B and
 * The links between the nodes are drawn between some of your friends that are themselves friends.
 * The color matches the year you added them
 * The size matches the number of pages the liked
+* For the different categories displayed you can find which sub-categories they gather in the file `likes_categories.json` and modify them if you like.
+
+## To be developped
+* Give you the possibility to choose the reason why you want to color the nodes (not only the year you added them but also the gender, their age or their current localisation).
+* Finalise the "Load Data" button
+* Add a pop-up explanation panel with the disclaimer.
+
+## Disclaimer
+The data displayed depends on each user. It uses data that YOU have access to but other people might not so try not putting your files online. On our side, we are just a student project and won't have access to your data. 
+
+Concerning using data about our Facebook's relations, it is mostly data publicly displayed, we didn't hack anything. Never forget to be careful about the data you let people have access to.
