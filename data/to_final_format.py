@@ -11,7 +11,10 @@ from datetime import datetime
 
 # The categories defined here have been made by hand and fit the visualisation
 # If you want to change them, do whatever but it might not work anymore
-categories = {'cinema':['Film', 'Acteur'], 'music':['Musicien/Groupe']}
+
+with open("likes_categories.json") as fp:
+  categories = json.load(fp)
+# categories = {'cinema': ['Film', 'Acteur'], 'music':['Musicien/Groupe']}
 
 def intersection(list1, list2):
   """
@@ -38,14 +41,15 @@ def distance(list1, list2):
     return 0
   return 0.5*(inter/len(list1) +  inter/len(list2))
 
-def is_present(el, list):
+def is_present(el, liste):
   """
   Check if an element is in a list.
   Input: el = element
          list = list
   Output: boolean (1 if True)
   """
-  if el in list:
+  liste = [str(val) for val in liste]
+  if el in liste:
     return 1
   return 0
 
@@ -60,9 +64,9 @@ def get_specific_category(categories_names, data):
   Output: a dictionary similar to data but with only the matching pages
   """
   out = {}
-  for key in data:
+  for (key, value) in data.items():
     category = []
-    likes = data[key]['likes']
+    likes = value['likes']
 
     for like in likes:
       if like['category'] in categories_names:
@@ -70,12 +74,12 @@ def get_specific_category(categories_names, data):
           category.append(like['id'])
 
     # Yes it is long, but avoid duplicate problems
-    info = {'year': data[key]['birthyear'],
-            'common friends': data[key]['common friends'],
-            'timestamp': data[key]['timestamp'],
-            'city': data[key]['city'],
-            'name': data[key]['name'],
-            'sex': data[key]['sex'],
+    info = {'year': value['birthyear'],
+            'common friends': value['common friends'],
+            'timestamp': value['timestamp'],
+            'city': value['city'],
+            'name': value['name'],
+            'sex': value['sex'],
             'pages': category}
 
     out[key] = info
@@ -147,6 +151,7 @@ def make_categorical_dic(dic_categories):
                     'target': target}
         new_link['distance'] = distance(data[source]['pages'],
                                         data[target]['pages'])
+
         new_link['relation'] = is_present(source, data[target]['common friends'])
         links.append(new_link)
 

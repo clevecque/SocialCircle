@@ -54,10 +54,12 @@ with open('friends_data.json', 'r+') as fp:
     friend_likes = friends_data[friend]['likes']
     friend_likes_categorized = []
 
-    for like in friend_likes:
-      # this condition is just a security, if the like is a dictionnary then the
-      # loop has already updated it
-      if type(like) is str:
+    # this condition is just a security, if the like is a dictionnary then the
+    # loop has already updated it
+    if all(isinstance(like, str) for like in friend_likes):
+
+      for like in friend_likes:
+
         # Like many people you might have, in your dark past, liked pages such as
         # 'I hate the last day of holidays blablabla' and it is not so relevant to us
         # 62 is not a precise number it just got us rid of a large amount of these pages
@@ -73,8 +75,12 @@ with open('friends_data.json', 'r+') as fp:
             pass
       # print('[', friend_likes.index(like)+1, '/', len(friend_likes), ']')
 
-    # Update the field 'likes' of the data previously retrieved
-    friends_data[friend]['likes'] = friend_likes_categorized
+      # Update the field 'likes' of the data previously retrieved
+      friends_data[friend]['likes'] = friend_likes_categorized
+
+      # Just so that Facebook isn't scared of too many requests
+      time.sleep(5)
+
     fp.seek(0)
     json.dump(friends_data, fp, sort_keys=True, indent=4, ensure_ascii=False)
     fp.truncate()
@@ -82,5 +88,4 @@ with open('friends_data.json', 'r+') as fp:
     i += 1
     print('[', i, '/', len(friends_data),'] - ', round(time.time() - tstart, 2), 's')
 
-    time.sleep(5)
 
