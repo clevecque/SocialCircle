@@ -7,7 +7,7 @@ var f = d3.format(".1f");
 var color = d3.scaleOrdinal(d3.schemeCategory20);
 // var radius = 3;
 
-var alpha = 10; // alpha est un facteur pour mettre a l echelle visuellement
+var alpha = 1; // alpha est un facteur pour mettre a l echelle visuellement
 
 // Define the div for the tooltip
 var tooltip = d3.select("body")
@@ -20,7 +20,7 @@ var simulation = d3.forceSimulation()
     return d.id;
   }).distance(function(d) {
     // c'est ici qu'on calcule la distance. On peut essayer d'autres fonctions (log, etc)
-    return height * d.distance * alpha // alpha est un facteur pour mettre a l echelle visuellement
+    return height * (1 - d.distance) * alpha // alpha est un facteur pour mettre a l echelle visuellement
   }).strength(0.1))
   .force("charge", d3.forceManyBody())
   .force("center", d3.forceCenter(width / 2, height / 2))
