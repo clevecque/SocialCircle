@@ -4,7 +4,7 @@ var svg = d3.select("svg"),
 
 var f = d3.format(".1f");
 
-var color = d3.scaleOrdinal(d3.schemeCategory10);
+var color = d3.scaleOrdinal(d3.schemeCategory20);
 // var radius = 3;
 
 var alpha = 10; // alpha est un facteur pour mettre a l echelle visuellement
