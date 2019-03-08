@@ -4,7 +4,7 @@ This is a final year project realized by Thomas Kuoch, Aliénor Dartiguenave and
 The goal is to visualize some affinities that could exist between some of our friends on Facebook.
 You can visualize the work here : https://clevecque.github.io/SocialCircle/
 
-![Example of visualisation](img/visualisation.png)
+![Example of visualisation](img/visualisation_2.png)
 
 
 ## Create your dataset
