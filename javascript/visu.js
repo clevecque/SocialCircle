@@ -375,5 +375,5 @@ function update(file){
   });
 };
 
-update("graph_test.json");
+update("graph.json");
 
