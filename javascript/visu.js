@@ -85,7 +85,14 @@ function drawGraph(nodes, links) {
   var circles = node.append("circle")
     // on définit ici le rayon du cercle, racine carrée pour ne pas que ça explose
     .attr("r", d => {return Math.sqrt(d.size)})
-    .attr("fill", d => {return color(d.timestamp)})
+    .attr("fill", d => {
+      if (d.timestamp === 1970) {
+        return '#FF20FF'
+      }
+      else {
+        return color(d.timestamp)
+      }
+    })
     // on ajoute les légendes
     .on("mouseover.tooltip", function(d) {
         tooltip.transition()
@@ -237,6 +244,15 @@ function selectElements(nodes, nbElements){
   return sizes;
 }
 
+function deleteByValue(val, obj) {
+    for(var f in obj) {
+      console.log(f);
+        if(obj[f]['key'] == val) {
+            obj.splice(f, 1);
+        }
+    }
+}
+
 function addLegendDates(nodes){
 
   var datesCount = d3.nest()
@@ -244,9 +260,13 @@ function addLegendDates(nodes){
     .rollup(function(v) { return v.length; })
     .entries(nodes);
 
+  deleteByValue('1970', datesCount);
+
   datesCount.sort(function(a,b){
     return a.key.localeCompare(b.key);
   });
+
+
 
   var entries = listDates.selectAll("li")
     .data(datesCount)
@@ -355,5 +375,5 @@ function update(file){
   });
 };
 
-update("graph.json");
+update("graph_test.json");
 

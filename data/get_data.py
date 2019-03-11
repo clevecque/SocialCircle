@@ -239,7 +239,7 @@ def get_likes(soup, liste_likes):
     elif any(['startindex' in value for c, value in enumerate(link.get('href').split(';')[-1].split('&'))]):
 
       # The links to change language have the same format but we don't want them
-      if 'language' not in link.get('href'):
+      if 'language' not in link.get('href') and 'privacyx' not in link.get('href'):
 
         data = requests.get('https://m.facebook.com'+link.get('href'), cookies=cj)
         soup = bs4.BeautifulSoup(data.text, 'html.parser')
@@ -428,5 +428,15 @@ for friend in friends_list:
   with open('friends_data.json', 'w') as fp:
     json.dump(friends_data, fp, sort_keys=True, indent=4, ensure_ascii=False)
 
+#Adding your own information
+own_url = '/' + args.id
+own_info = get_user_info(own_url)
+own_info['name'] = 'Moi'
+own_info['timestamp'] = 0
+own_info['common friends'] = []
+own_likes = get_all_likes(own_url)
+own_info['likes'] = own_likes
+friends_data[own_url] = own_info
 
-
+with open('friends_data.json', 'w') as fp:
+    json.dump(friends_data, fp, sort_keys=True, indent=4, ensure_ascii=False)

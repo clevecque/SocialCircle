@@ -126,19 +126,22 @@ def make_categorical_dic(dic_categories):
         # liked in this category
 
         # We also update the timestamp to keep only the year
-        if data[key]['timestamp']:
+        if data[key]['timestamp'] is not None:
           date = datetime.fromtimestamp(data[key]['timestamp']).year
+
+
+          nodes.append({'id': key,
+                        'name': data[key]['name'],
+                        'size': len(data[key]['pages']),
+                        'timestamp': date,
+                        'city': data[key]['city'],
+                        'sex': data[key]['sex']})
+
         else:
+          print(data[key]['name'], data[key]['timestamp'])
           # You can change to break or just fix null, for easier fix now i will use break
           # date = None
-          break
-
-        nodes.append({'id': key,
-                      'name': data[key]['name'],
-                      'size': len(data[key]['pages']),
-                      'timestamp': date,
-                      'city': data[key]['city'],
-                      'sex': data[key]['sex']})
+          pass
 
     # To limit the size of the file (not so important but still), we create two loops
     # and the second one take only the remaining friends. So we will have always
@@ -161,9 +164,9 @@ def make_categorical_dic(dic_categories):
 
 
 
-data_categories = get_data_w_categories('friends_data.json')
+data_categories = get_data_w_categories('test_file_2.json')
 graph_data = make_categorical_dic(data_categories)
 
-with open('graph.json', 'w') as fw:
+with open('graph_test.json', 'w') as fw:
   json.dump(graph_data, fw, sort_keys=True, indent=4, ensure_ascii=False)
 
