@@ -4,8 +4,9 @@ This is a final year project realized by Thomas Kuoch, Aliénor Dartiguenave and
 The goal is to visualize some affinities that could exist between some of our friends on Facebook.
 You can visualize the work here : https://clevecque.github.io/SocialCircle/
 
-![Example of visualisation](img/visualisation_2.png)
+![Example of visualisation](img/visualisation_3.png)
 
+Let's say someone called Robert wants to use this visualisation. Then each node represents one of Robert's friend, except the pink node which represents himself. When you mouseover the nodes, some links are drawn which represents friendship links between people. And the closest are the nodes, the closest is the affinity between the people on the selected subject.
 
 ## Create your dataset
 1. You will need to download your data about your friends from Facebook. 
@@ -47,7 +48,7 @@ For now the button "Load data" doesn't work but it should come. In between you c
 where A is the number of pages of user A, B is the number of pages of user B and A ∩ B is the number of common pages.
 * This affinity will map the nodes: the closer they are the higher number of common pages they have. This affinity is also supposed to take into account the fact that some people like a lot more pages than another and it could skew the affinity.
 * The links between the nodes are drawn between some of your friends that are themselves friends.
-* The color matches the year you added them
+* The color matches the year you added them except for the pink node that represents the main user
 * The size matches the number of pages the liked
 * For the different categories displayed you can find which sub-categories they gather in the file `likes_categories.json` and modify them if you like.
 
